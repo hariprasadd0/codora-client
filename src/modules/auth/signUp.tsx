@@ -9,7 +9,7 @@ import logo from './assets/codora.svg'
 import { NavLink } from "react-router-dom"
 
 
- const Login = () => {
+const SignUp = () => {
     return (
                 <Card className="w-[350px]">
       <CardHeader className="flex flex-row items-center gap-2">
@@ -18,8 +18,8 @@ import { NavLink } from "react-router-dom"
   <AvatarFallback>CD</AvatarFallback>
 </Avatar>
 <div className="flex flex-col gap-2">
-        <CardTitle>Sign In</CardTitle>
-      <CardDescription className="text-muted-foreground">Enter your credentials to login</CardDescription>
+        <CardTitle>Sign Up</CardTitle>
+      <CardDescription className="text-muted-foreground">Create an account to get started</CardDescription>
         </div>
       </CardHeader>
       <CardContent>
@@ -32,22 +32,21 @@ import { NavLink } from "react-router-dom"
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input className="text-sm" id="password" placeholder="Enter your password" type="password" />
-              <span className="flex items-center justify-end p-0"><NavLink className="text-muted-foreground text-sm" to="/forgot-password">Forgot password?</NavLink></span>
+              <Input className="text-sm" id="password" placeholder="Enter a password" type="password" />
             </div>  
           </div>
         </form>
         
       </CardContent>
       <CardFooter className="flex flex-col items-center gap-4 overflow-hidden">
-        <Button className="w-full h-10">Login</Button>
+        <Button className="w-full h-10">Create an account</Button>
         <span className="w-full flex items-center gap-2 justify-center text-muted-foreground"><Separator />or<Separator/></span>
-        <Button className="w-full h-10 text-muted-foreground display-flex items-center justify-center gap-2" variant="outline"><FcGoogle style={{ width: "20px", height: "20px" }} /> Login with Google</Button>
-        <p className="text-muted-foreground text-sm">Don't have an account? <NavLink to="/signup">Sign Up</NavLink></p>
+        <Button className="w-full h-10 text-muted-foreground display-flex items-center justify-center gap-2" variant="outline"><FcGoogle style={{ width: "20px", height: "20px" }} /> Sign up with Google</Button>
+        <p className="text-muted-foreground text-sm">Already have an account? <NavLink to="/login">Login</NavLink></p>
       </CardFooter>
     </Card>
     
     )
 }
 
-export default Login
+export default SignUp;
