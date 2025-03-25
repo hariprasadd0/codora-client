@@ -13,7 +13,13 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-export function DatePicker({ newDate }: { newDate?: string }) {
+export function DatePicker({
+  newDate,
+  dateFormat,
+}: {
+  newDate?: string;
+  dateFormat?: string;
+}) {
   const [date, setDate] = React.useState<Date>();
   React.useEffect(() => {
     if (newDate) {
@@ -32,7 +38,7 @@ export function DatePicker({ newDate }: { newDate?: string }) {
           )}
         >
           <CalendarIcon />
-          {date ? format(date, 'MMM d') : <span>Pick a date</span>}
+          {date ? format(date, dateFormat || 'PP') : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent
