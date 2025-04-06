@@ -33,6 +33,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import CustomDialog from '../Dialog';
+import NewProjectDialog from '../create-project';
 // Menu items.
 const items = [
   {
@@ -70,12 +71,11 @@ const projects = [
   },
 ];
 
-export function AppSidebar() {
-  const navigate = useNavigate();
+export function AppSidebar({ side }: { side: 'left' | 'right' }) {
   const location = useLocation();
 
   return (
-    <Sidebar>
+    <Sidebar side={side}>
       <SidebarContent>
         <SidebarHeader>
           <SidebarMenu>
@@ -111,12 +111,12 @@ export function AppSidebar() {
                       to={item.url}
                       className={
                         location.pathname === item.url
-                          ? 'bg-secondary'
+                          ? 'bg-background dark:bg-secondary shadow-sm border'
                           : 'text-muted-foreground'
                       }
                     >
-                      <item.icon />
-                      <span className="text-[13px]">{item.title}</span>
+                      <item.icon size={12} />
+                      <span>{item.title}</span>
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -128,60 +128,24 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel className="my-1">Projects</SidebarGroupLabel>
           <SidebarGroupAction>
-            <CustomDialog
-              title="New Project"
-              trigger={<Plus className="w-4 h-4" />}
-              cancel={
-                <Button
-                  variant="outline"
-                  className="text-xs h-8"
-                >
-                  Cancel
-                </Button>
-              }
-              footer={<Button className="text-xs h-8"> Create Project</Button>}
-            >
-              <div>
-                <section className="flex flex-col gap-4">
-                  <div className="flex items-center gap-3">
-                    <Avatar>
-                      <AvatarImage src="dd" />
-                      <AvatarFallback className="text-muted-foreground">
-                        dd
-                      </AvatarFallback>
-                    </Avatar>
-
-                    <Input
-                      className="outline-none border-none focus-visible:ring-0"
-                      type="text"
-                      placeholder="Project Name"
-                    />
-                  </div>
-                  <div className="">
-                    <h6 className="text-sm">
-                      <Input
-                        className="outline-none border-none focus-visible:ring-0"
-                        type="text"
-                        placeholder="Project Summary"
-                      />
-                    </h6>
-                  </div>
-                </section>
-              </div>
-            </CustomDialog>
+            <NewProjectDialog trigger={<Plus className="w-4 h-4" />} />
           </SidebarGroupAction>
           <SidebarGroupContent>
             <SidebarMenu>
               {projects.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <SidebarMenuButton
-                      onClick={() => navigate(`projects/${item.id}`)}
-                      className="flex items-center justify-start text-sm font-normal"
+                    <NavLink
+                      to={`projects/${item.id}`}
+                      className={
+                        location.pathname === `/projects/${item.id}`
+                          ? 'bg-background dark:bg-secondary shadow-sm '
+                          : 'text-muted-foreground'
+                      }
                     >
                       <item.icon size={12} />
-                      <span className="text-[13px]">{item.title}</span>
-                    </SidebarMenuButton>
+                      <span>{item.title}</span>
+                    </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
