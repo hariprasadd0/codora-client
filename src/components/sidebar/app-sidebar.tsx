@@ -8,7 +8,7 @@ import {
   Puzzle,
   Settings,
 } from 'lucide-react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import {
   Sidebar,
@@ -30,10 +30,8 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import CustomDialog from '../Dialog';
-import NewProjectDialog from '../create-project';
+import NewProjectDialog from '../createProject/create-project';
+import { useProjects } from '@/modules/projects/hooks/useProjects';
 // Menu items.
 const items = [
   {
@@ -63,16 +61,10 @@ const items = [
   },
 ];
 
-const projects = [
-  {
-    id: '1',
-    title: 'New Project',
-    icon: Puzzle,
-  },
-];
-
 export function AppSidebar({ side }: { side: 'left' | 'right' }) {
   const location = useLocation();
+  const { data } = useProjects();
+  const project = data?.projects || [];
 
   return (
     <Sidebar side={side}>
@@ -132,8 +124,8 @@ export function AppSidebar({ side }: { side: 'left' | 'right' }) {
           </SidebarGroupAction>
           <SidebarGroupContent>
             <SidebarMenu>
-              {projects.map((item) => (
-                <SidebarMenuItem key={item.title}>
+              {project.slice(-3).map((item: { id: number; name: string }) => (
+                <SidebarMenuItem key={item.id}>
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={`projects/${item.id}`}
@@ -143,8 +135,7 @@ export function AppSidebar({ side }: { side: 'left' | 'right' }) {
                           : 'text-muted-foreground'
                       }
                     >
-                      <item.icon size={12} />
-                      <span>{item.title}</span>
+                      <span>{item.name}</span>
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
