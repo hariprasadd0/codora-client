@@ -1,6 +1,5 @@
 import NotFound from '@/components/NotFound';
 import { Calendar } from '@/modules/calendar/Calendar.tsx';
-import Page from '@/modules/projects/components/table/page.tsx';
 import Task from '@/modules/tasks/components/Task.tsx';
 import Tasks from '@/modules/tasks/Tasks.tsx';
 import Settings from '@/modules/users/Settings';
@@ -49,10 +48,6 @@ const protectedRoutes = [
   {
     path: '*',
     element: <NotFound />,
-  },
-  {
-    path: '/test',
-    element: <Page />,
   },
 ];
 
