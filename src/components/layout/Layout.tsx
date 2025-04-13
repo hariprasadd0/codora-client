@@ -5,6 +5,7 @@ import Navbar from '../navbar/app-navbar';
 import { useEffect, useRef } from 'react';
 import { useSettingsStore } from '@/modules/users/store/user.store';
 import ErrorBoundary from '../ErrorBoundary';
+import { Toaster } from '@/components/ui/sonner';
 
 const Layout = () => {
   const location = useLocation();
@@ -28,6 +29,7 @@ const Layout = () => {
             <Navbar location={location} />
             <Outlet />
           </main>
+          <Toaster />
         </div>
         {side == 'right' && <AppSidebar side={side} />}
       </ErrorBoundary>
