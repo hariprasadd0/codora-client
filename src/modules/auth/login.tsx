@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from './validation/schema';
 import { LoginForm } from './validation/schema';
+import { toast } from 'sonner';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -49,7 +51,21 @@ const Login = () => {
         setUser(data.loggedUser, data.accessToken);
         navigate('/dashboard', { replace: true });
       },
+      onError: (error: any) => {
+        if (error?.response?.status === 401) {
+          toast.error('We couldn’t find your account on Codora.', {
+            style: {
+              background: 'red',
+              color: 'white',
+              border: 'none',
+            },
+          });
+        } else {
+          toast.error('Something went wrong. Try again later!');
+        }
+      },
     });
+    reset();
   };
 
   return (
