@@ -98,15 +98,15 @@ export function AppSidebar({ side }: { side: 'left' | 'right' }) {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.url}
-                      className={
-                        location.pathname === item.url
-                          ? 'bg-background dark:bg-secondary shadow-sm border'
-                          : 'text-muted-foreground'
-                      }
-                    >
+                  <SidebarMenuButton
+                    asChild
+                    className={
+                      location.pathname === item.url
+                        ? 'bg-background dark:bg-secondary shadow-sm border hover:bg-background'
+                        : 'text-muted-foreground'
+                    }
+                  >
+                    <NavLink to={item.url}>
                       <item.icon size={12} />
                       <span>{item.title}</span>
                     </NavLink>
@@ -126,15 +126,15 @@ export function AppSidebar({ side }: { side: 'left' | 'right' }) {
             <SidebarMenu>
               {project.slice(-3).map((item: { id: number; name: string }) => (
                 <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={`projects/${item.id}`}
-                      className={
-                        location.pathname === `/projects/${item.id}`
-                          ? 'bg-background dark:bg-secondary shadow-sm '
-                          : 'text-muted-foreground'
-                      }
-                    >
+                  <SidebarMenuButton
+                    asChild
+                    className={
+                      location.pathname === `/projects/${item.id}`
+                        ? 'bg-background dark:bg-secondary shadow-sm border hover:bg-background'
+                        : 'text-muted-foreground'
+                    }
+                  >
+                    <NavLink to={`projects/${item.id}`}>
                       <span>{item.name}</span>
                     </NavLink>
                   </SidebarMenuButton>
