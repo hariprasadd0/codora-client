@@ -1,7 +1,6 @@
 import { useAuthStore } from '@/modules/auth/store/auth.store';
 import { Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { CgSpinner } from 'react-icons/cg';
 
 export const ProtectedRouteWrapper = ({
   children,
@@ -26,11 +25,7 @@ export const ProtectedRouteWrapper = ({
   }, []);
 
   if (!isHydrated) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center font-semibold text-muted-foreground text-2xl">
-        C
-      </div>
-    );
+    return <div></div>
   }
 
   return token && user ? (
