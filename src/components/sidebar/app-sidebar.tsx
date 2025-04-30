@@ -32,6 +32,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import NewProjectDialog from '../createProject/create-project';
 import { useProjects } from '@/modules/projects/hooks/useProjects';
+import {useUserData} from "@/hooks/use-user.tsx";
+import {getInitialsFromName} from "@/lib/utils.ts";
 // Menu items.
 const items = [
   {
@@ -64,6 +66,7 @@ const items = [
 export function AppSidebar({ side }: { side: 'left' | 'right' }) {
   const location = useLocation();
   const { data } = useProjects();
+  const {data:userData} = useUserData();
   const project = data?.projects || [];
 
   return (
@@ -155,10 +158,10 @@ export function AppSidebar({ side }: { side: 'left' | 'right' }) {
                       src="/avatars/01.png"
                       alt="@hariprasad"
                     />
-                    <AvatarFallback>HP</AvatarFallback>
+                    <AvatarFallback>{getInitialsFromName(userData?.name)}</AvatarFallback>
                   </Avatar>
                   <div className="flex items-center">
-                    <span className="font-medium">Hariprasad</span>
+                    <span className="font-medium">{userData?.name}</span>
                   </div>
                   <div className="ml-auto">
                     <ChevronUp size={12} />
