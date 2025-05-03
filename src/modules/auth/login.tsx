@@ -24,7 +24,7 @@ import { toast } from 'sonner';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { mutate: login, isError, isPending } = useLogin();
+  const { mutate: login, isPending } = useLogin();
   const { setUser, user } = useAuthStore();
 
   const {
@@ -61,7 +61,14 @@ const Login = () => {
             },
           });
         } else {
-          toast.error('Something went wrong. Try again later!');
+          toast.warning('Something went wrong. Try again later!.', {
+            style: {
+              background: 'orange',
+              color: 'white',
+              border: 'none',
+            },
+          });
+
         }
       },
     });
@@ -109,6 +116,7 @@ const Login = () => {
                 id="password"
                 placeholder="Enter your password"
                 type="password"
+                passwordToggle
                 {...register('password')}
               />
               {errors.password && (

@@ -19,6 +19,7 @@ const Layout = () => {
   return (
     <SidebarProvider>
       <ErrorBoundary>
+
         {side == 'left' && <AppSidebar side={side} />}
 
         <div className="h-screen  w-screen bg-[hsl(0,0%,98%)] dark:bg-[hsl(0,0%,0%)]">
