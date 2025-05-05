@@ -6,6 +6,7 @@ import {
   Home,
   Plus,
   Puzzle,
+    LogOut,
   Settings,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -34,6 +35,8 @@ import NewProjectDialog from '../createProject/create-project';
 import { useProjects } from '@/modules/projects/hooks/useProjects';
 import {useUserData} from "@/hooks/use-user.tsx";
 import {getInitialsFromName} from "@/lib/utils.ts";
+import {useLogout} from "@/modules/auth/api/authApi.ts";
+import {useAuthStore} from "@/modules/auth/store/auth.store.ts";
 // Menu items.
 const items = [
   {
@@ -66,9 +69,17 @@ const items = [
 export function AppSidebar({ side }: { side: 'left' | 'right' }) {
   const location = useLocation();
   const { data } = useProjects();
+  const { mutate: Logout,isSuccess } = useLogout();
   const {data:userData} = useUserData();
   const project = data?.projects || [];
+  const {logoutUser} = useAuthStore()
 
+  const handleLogout = ()=>{
+     Logout()
+    if (isSuccess) {
+      logoutUser()
+    }
+  }
   return (
     <Sidebar side={side}>
       <SidebarContent>
@@ -171,11 +182,8 @@ export function AppSidebar({ side }: { side: 'left' | 'right' }) {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
-                <DropdownMenuItem>
-                  <span>Acme Inc</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Acme Corp.</span>
+                <DropdownMenuItem onClick={handleLogout} >
+                  <span className={'flex gap-2 items-center text-muted-foreground hover:text-primary cursor-pointer'}><LogOut size={16}/>Logout</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
