@@ -2,7 +2,6 @@ import { apiClient } from '@/lib/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PasswordReset } from '../validation/schema';
 
-// add api to lib add interceptor for attaching the jwt token
 type LoginCredentials = {
   email: string;
   password: string;
@@ -25,6 +24,20 @@ export const useLogin = () => {
     },
   });
 };
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+        await apiClient.post('users/logout');
+    },
+    onSuccess: async() => {
+      await queryClient.invalidateQueries(['user']);
+    },
+  });
+};
+
 export const useSignUp = () => {
   const queryClient = useQueryClient();
 
