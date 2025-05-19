@@ -1,0 +1,54 @@
+:root {
+  .fc table {
+    @apply text-sm;
+  }
+  .fc .fc-toolbar-title {
+    @apply text-lg font-medium;
+  }
+  .fc-button-primary {
+    @apply border bg-transparent text-primary shadow-none outline-none  text-xs hover:bg-transparent hover:text-primary;
+  }
+  .fc-prev-button,
+  .fc-next-button {
+    @apply border-none shadow-none outline-none;
+  }
+  .fc .fc-button-primary:not(:disabled).fc-button-active:focus,
+  .fc .fc-button-primary:not(:disabled):active:focus {
+    box-shadow: none;
+  }
+  .fc-day-past {
+  }
+  .fc-day-other {
+    @apply bg-muted/60 text-muted-foreground pointer-events-none;
+  }
+  .fc .fc-daygrid-day.fc-day-today {
+    @apply bg-transparent;
+  }
+  .fc-daygrid-day-top {
+    @apply flex-row p-1;
+  }
+  .fc-daygrid-day-number {
+    @apply text-xs;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+  }
+  .fc
+    .fc-daygrid-day.fc-day-today
+    .fc-daygrid-day-frame
+    .fc-daygrid-day-top
+    .fc-daygrid-day-number {
+    @apply bg-primary rounded-full text-primary-foreground flex items-center justify-center;
+  }
+
+  .fc-theme-standard .fc-scrollgrid {
+    @apply rounded-sm;
+  }
+  .fc-col-header-cell-cushion {
+    @apply font-normal outline-none;
+  }
+  .fc-popover-title {
+    @apply text-xs;
+  }
+}
