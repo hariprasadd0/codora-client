@@ -1,6 +1,7 @@
 import { apiClient } from '@/lib/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PasswordReset } from '../validation/schema';
+import {useAuthStore} from "@/modules/auth/store/auth.store.ts";
 
 type LoginCredentials = {
   email: string;
@@ -11,6 +12,8 @@ type NewPassword = {
   newPassword: string;
 };
 
+const userQueryKey = ['user'] as const;
+
 export const useLogin = () => {
   const queryClient = useQueryClient();
 
@@ -20,12 +23,13 @@ export const useLogin = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      queryClient.setQueryData(['user'], data.user);
+      queryClient.setQueryData(userQueryKey, data.user);
     },
   });
 };
 
 export const useLogout = () => {
+ const logoutUser = useAuthStore((state)=> state.logoutUser)
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -33,7 +37,8 @@ export const useLogout = () => {
         await apiClient.post('users/logout');
     },
     onSuccess: async() => {
-      await queryClient.invalidateQueries(['user']);
+     logoutUser();
+      await queryClient.invalidateQueries({queryKey:userQueryKey}) ;
     },
   });
 };
@@ -48,7 +53,7 @@ export const useSignUp = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      queryClient.setQueryData(['user'], data.user);
+      queryClient.setQueryData(userQueryKey, data.user);
     },
   });
 };
