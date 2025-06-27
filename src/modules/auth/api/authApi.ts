@@ -16,6 +16,7 @@ const userQueryKey = ['user'] as const;
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
+  const {setAuth} = useAuthStore();
 
   return useMutation({
     mutationFn: async (credentials: LoginCredentials) => {
@@ -23,13 +24,14 @@ export const useLogin = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      queryClient.setQueryData(userQueryKey, data.user);
+      queryClient.setQueryData(userQueryKey, data.loggedUser);
+      setAuth(data.loggedUser,data.accessToken)
     },
   });
 };
 
 export const useLogout = () => {
- const logoutUser = useAuthStore((state)=> state.logoutUser)
+ const logoutUser = useAuthStore((state)=> state.clearAuth)
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -38,6 +40,7 @@ export const useLogout = () => {
     },
     onSuccess: async() => {
      logoutUser();
+     queryClient.setQueryData(userQueryKey, null);
       await queryClient.invalidateQueries({queryKey:userQueryKey}) ;
     },
   });
@@ -45,6 +48,7 @@ export const useLogout = () => {
 
 export const useSignUp = () => {
   const queryClient = useQueryClient();
+  const {setAuth } = useAuthStore();
 
   return useMutation({
     mutationFn: async (credentials: LoginCredentials) => {
@@ -54,6 +58,8 @@ export const useSignUp = () => {
     },
     onSuccess: (data) => {
       queryClient.setQueryData(userQueryKey, data.user);
+      setAuth(data.user,data.accessToken)
+
     },
   });
 };

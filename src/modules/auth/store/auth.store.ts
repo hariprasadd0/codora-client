@@ -10,8 +10,8 @@ type User = {
 interface AuthState {
   user: User | null;
   token: string | null;
-  setUser: (user: User, token: string) => void;
-  logoutUser: () => void;
+  setAuth: (user: User, token: string) => void;
+  clearAuth: () => void;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -19,9 +19,8 @@ const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       token: null,
-      setUser: (user, token) =>
-        set((state) => ({ user: user ?? state.user, token })),
-      logoutUser: () => set({ user: null, token: null }),
+      setAuth: (user,token)=> set({user,token}),
+        clearAuth: () => set({ user: null, token: null }),
     }),
     {
       name: 'auth-storage',
