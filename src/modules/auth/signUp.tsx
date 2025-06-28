@@ -24,7 +24,7 @@ import { toast } from 'sonner';
 const SignUp = () => {
   const navigate = useNavigate();
   const { mutate: signup } = useSignUp();
-  const { setUser, user } = useAuthStore();
+  const { user } = useAuthStore();
 
   const {
     register,
@@ -46,8 +46,7 @@ const SignUp = () => {
 
   const onSubmit = (data: SignUpForm) => {
     signup(data, {
-      onSuccess(data) {
-        setUser(data.data, data.accessToken);
+      onSuccess() {
         navigate('/dashboard', { replace: true });
       },
       onError(error: any) {
@@ -95,9 +94,9 @@ const SignUp = () => {
                 placeholder="john"
                 {...register('name')}
               />
-              {errors.email && (
+              {errors.name && (
                 <span className="text-xs text-red-500">
-                  {errors.email.message}
+                  {errors.name.message}
                 </span>
               )}
             </div>
