@@ -25,7 +25,7 @@ import { toast } from 'sonner';
 const Login = () => {
   const navigate = useNavigate();
   const { mutate: login, isPending } = useLogin();
-  const { setUser, user } = useAuthStore();
+  const { user } = useAuthStore();
 
   const {
     register,
@@ -47,8 +47,7 @@ const Login = () => {
 
   const onSubmit = (data: LoginForm) => {
     login(data, {
-      onSuccess(data) {
-        setUser(data.loggedUser, data.accessToken);
+      onSuccess() {
         navigate('/dashboard', { replace: true });
       },
       onError: (error: any) => {
@@ -136,11 +135,11 @@ const Login = () => {
           </div>
           <Button
             type="submit"
-            className="w-full h-10 my-4   relative inline-flex items-center justify-center gap-x-1.5 overflow-hidden
+            className="w-full h-10 my-4  relative inline-flex items-center justify-center gap-x-1.5 overflow-hidden
     rounded-md px-3 py-1.5
     shadow-[inset_0_0.75px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.4),0_0_0_1px_#18181b]
     transition-colors duration-150 ease-in-out
-    outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#3b82f6]
+    outline-none focus-visible:ring-2 focus-visible:ring-offset-2
     hover:bg-[#3f3f46]
     active:bg-[#52525b]"
             disabled={isPending}
