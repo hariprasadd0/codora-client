@@ -36,14 +36,14 @@ apiClient.interceptors.response.use(
         );
         console.log(res);
 
-        useAuthStore.getState().setUser(undefined!, res.data.accessToken);
+        useAuthStore.getState().setAuth(undefined!, res.data.accessToken);
 
         originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
         return axios(originalRequest);
       } catch (err) {
         console.log(err);
 
-        useAuthStore.getState().logout();
+        useAuthStore.getState().clearAuth();
         return Promise.reject(err);
       }
     }
