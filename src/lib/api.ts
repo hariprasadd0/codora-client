@@ -34,7 +34,6 @@ apiClient.interceptors.response.use(
           {},
           { withCredentials: true },
         );
-        console.log(res);
 
         useAuthStore.getState().setAuth(undefined!, res.data.accessToken);
 
