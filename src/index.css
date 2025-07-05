@@ -79,7 +79,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-[#000000BF];
   }
   ::-webkit-scrollbar {
     width: 0px;
