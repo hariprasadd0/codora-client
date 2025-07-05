@@ -7,46 +7,21 @@ import {
   Clock,
   Folder,
   AlertCircle,
-  Calendar,
-  ClipboardList,
+  ClipboardList, Calendar
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import StatsCard from './components/statsCard';
 import AssignedTasks from './components/assignedTasks';
-import { Tasks } from './components/assignedTasks';
+import {Task} from "@/modules/tasks/types.ts";
 import ProjectCard from './components/projectCard';
 import { useProjects } from '../projects/hooks/useProjects';
 import {Loader} from '@/components/Loader'
+import {useTasks} from '@/modules/tasks/hooks/useTasks.tsx'
 
 const Dashboard = () => {
   // Dummy data for assigned tasks
-  const assignedTasks: Tasks[] = [
-    {
-      id: 1,
-      title: 'Update user interface',
-      project: 'Website Redesign',
-      dueDate: '2025-03-26',
-      priority: 'high',
-      status: 'inprogress',
-    },
-    {
-      id: 2,
-      title: 'Fix responsive layout issues',
-      project: 'Mobile App',
-      dueDate: '2025-03-25',
-      priority: 'medium',
-      status: 'completed',
-    },
-    {
-      id: 3,
-      title: 'Implement authentication',
-      project: 'CRM System',
-      dueDate: '2025-03-29',
-      priority: 'high',
-      status: 'inprogress',
-    },
-  ];
-
+  const {data:tasks} = useTasks()
+  const assignedTasks = Array.isArray(tasks)? tasks as Task[]:[];
   const { data,isLoading } = useProjects();
 
   const projects = data?.projects || [];
@@ -104,7 +79,6 @@ const Dashboard = () => {
       avatar: 'J',
     },
   ];
-
   // Dummy data for upcoming deadlines
   const upcomingDeadlines = [
     {
@@ -214,7 +188,7 @@ const Dashboard = () => {
                       >
                         <div className="flex justify-between items-center">
                           <div className="flex flex-col">
-                            <span className="font-medium ">{deadline.title}</span>
+                            <span className="font-medium text-sm">{deadline.title}</span>
                             <span className="text-xs text-muted-foreground">
                         {deadline.project}
                       </span>
