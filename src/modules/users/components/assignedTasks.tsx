@@ -44,7 +44,7 @@ const AssignedTasks = ({ tasks }: { tasks: Task[] }) => {
               <div className="flex flex-col">
                 <span className="font-medium text-sm">{task.name}</span>
                 <span className="text-xs text-muted-foreground">
-                  {task.projectId}
+                  {task.project.name}
                 </span>
               </div>
               <div className="flex items-center gap-1 justify-between">
