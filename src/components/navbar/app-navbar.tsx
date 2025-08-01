@@ -10,6 +10,7 @@ import {
 import Notification from '@/modules/users/components/notification';
 import type { Location } from 'react-router-dom';
 import NewProjectDialog from '../createProject/create-project';
+import NewTaskDialog from '@/modules/tasks/components/newTask.tsx';
 import { motion } from 'framer-motion';
 import { breadcrumbConfig } from '@/lib/breadcrumb.config';
 import { useQuery } from '@tanstack/react-query';
@@ -55,8 +56,8 @@ const Navbar = ({ location }: NavbarProps) => {
         );
       case '/tasks':
         return (
-          // <NewTaskDialog />
-          <div>dd</div>
+         <NewTaskDialog />
+         
         );
       default:
         return null;
