@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import { configDefaults } from 'vitest/config'
 import type { UserConfig } from 'vite'
 
 // https://vite.dev/config/
@@ -15,6 +14,8 @@ const config: UserConfig = defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
+
     },
   },
 })
