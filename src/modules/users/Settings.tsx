@@ -30,9 +30,7 @@ import {
   Bell,
   PanelLeft,
   PanelRight,
-  Clock,
-  Lock,
-  Shield, BlocksIcon,
+  Clock, BlocksIcon,
 } from 'lucide-react';
 import { useSettingsStore } from './store/user.store';
 import { useUpdateUserProfile } from './hooks/useUserProfile';
@@ -212,12 +210,8 @@ const Settings = () => {
                           </Label>
                           <Select
                               defaultValue={userProfile?.preference}
-                              {...register('preference')}
                               onValueChange={(value) => {
-                                setValue(
-                                    'preference',
-                                    value as UserProfileForm['preference'],
-                                );
+                                setValue('preference', value as UserProfileForm['preference'], { shouldDirty: true });
                               }}
                           >
                             <SelectTrigger>
@@ -232,7 +226,7 @@ const Settings = () => {
                             <SelectContent>
                               <SelectItem value="MORNING">MORNING</SelectItem>
                               <SelectItem value="AFTERNOON">AFTERNOON</SelectItem>
-                              <SelectItem value="NIGHT">NIGHT</SelectItem>
+                              <SelectItem value="EVENING">EVENING</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
