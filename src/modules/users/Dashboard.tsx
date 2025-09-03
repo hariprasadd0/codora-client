@@ -17,14 +17,17 @@ import ProjectCard from './components/projectCard';
 import { useProjects } from '../projects/hooks/useProjects';
 import {Loader} from '@/components/Loader'
 import {useTasks} from '@/modules/tasks/hooks/useTasks.tsx'
+import {useRecent} from "@/modules/users/hooks/useDashboard.ts";
+import {formatDistanceToNow} from "date-fns";
 
 const Dashboard = () => {
   // Dummy data for assigned tasks
   const {data:tasks} = useTasks()
   const assignedTasks = Array.isArray(tasks)? tasks as Task[]:[];
   const { data,isLoading } = useProjects();
+ const {data:recent } = useRecent()
 
-  const projects = data?.projects || [];
+  const projects =  Array.isArray(data) ? data : [];
 
   const cardContents = [
     {
@@ -50,33 +53,6 @@ const Dashboard = () => {
       previousCount: 10,
       currentCount: 9,
       icon: <Clock className="w-4 h-4 text-gray-500" />,
-    },
-  ];
-  // Dummy data for recent activity
-  const recentActivities = [
-    {
-      id: 1,
-      action: 'Task completed',
-      description: 'Design homepage mockup',
-      user: 'Alex',
-      time: '2 hours ago',
-      avatar: 'A',
-    },
-    {
-      id: 2,
-      action: 'New comment',
-      description: 'On task: Database schema design',
-      user: 'Maria',
-      time: '4 hours ago',
-      avatar: 'M',
-    },
-    {
-      id: 3,
-      action: 'New task created',
-      description: 'Implement payment gateway',
-      user: 'John',
-      time: '6 hours ago',
-      avatar: 'J',
     },
   ];
   // Dummy data for upcoming deadlines
@@ -123,47 +99,49 @@ const Dashboard = () => {
             <ProjectCard projects={projects}/>
 
             {/* Recent Activity */}
-            <Card className="rounded-md shadow-none overflow-hidden ">
-              <CardHeader
-                  className="flex flex-row justify-between items-center overflow-hidden p-3 bg-[#FAFAFA] dark:bg-transparent pb-2 border-b ">
-                <CardTitle className="text-xs text-muted-foreground font-medium  flex items-center gap-2">
-                  <BellDot className="w-4 h-4"/> Recent Activity
-                </CardTitle>
-                <Button
-                    variant="ghost"
-                    className="text-xs text-muted-foreground shadow-none  hover:bg-transparent"
-                >
-                  View All
-                </Button>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="divide-y divide-muted">
-                  {recentActivities.map((activity) => (
-                      <div
-                          key={activity.id}
-                          className="flex items-start gap-3 p-4 hover:bg-secondary"
+              <Card className="rounded-md shadow-none overflow-hidden ">
+                  <CardHeader
+                      className="flex flex-row justify-between items-center overflow-hidden p-3 bg-[#FAFAFA] dark:bg-transparent pb-2 border-b ">
+                      <CardTitle className="text-xs text-muted-foreground font-medium  flex items-center gap-2">
+                          <BellDot className="w-4 h-4"/> Recent Activity
+                      </CardTitle>
+                      <Button
+                          variant="ghost"
+                          className="text-xs text-muted-foreground shadow-none  hover:bg-transparent"
                       >
-                        <Avatar className="h-7 w-7">
-                          <AvatarFallback className="text-xs bg-secondary ">
-                            {activity.avatar}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col">
-                    <span className="text-sm font-medium ">
-                      {activity.action}
-                    </span>
-                          <span className="text-xs text-muted-foreground">
-                      {activity.description}
-                    </span>
-                          <span className="text-xs text-muted-foreground mt-1">
-                      {activity.time}
-                    </span>
-                        </div>
+                          View All
+                      </Button>
+                  </CardHeader>
+                  <CardContent className="p-0">
+                      <div className="divide-y divide-muted">
+                          {Array.isArray(recent) && recent.length > 0 ? recent.map((activity: any) => (
+                              <div
+                                  key={activity.id}
+                                  className="flex items-start gap-3 p-4 hover:bg-secondary"
+                              >
+                                  <Avatar className="h-7 w-7">
+                                      <AvatarFallback className="text-xs bg-secondary ">
+                                          {activity.assignedToId ? activity.assignedToId[0].toUpperCase() : "?"}
+                                      </AvatarFallback>
+                                  </Avatar>
+                                  <div className="flex flex-col">
+                <span className="text-sm font-medium ">
+                  {activity.name}
+                </span>
+                                      <span className="text-xs text-muted-foreground">
+                  {activity.description}
+                </span>
+                                      <span className="text-xs text-muted-foreground mt-1">
+                 {formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true })}
+                </span>
+                                  </div>
+                              </div>
+                          )) : (
+                              <div className="p-4 text-xs text-muted-foreground">No recent activity.</div>
+                          )}
                       </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                  </CardContent>
+              </Card>
 
             {/* Upcoming Deadlines */}
             <Card className="rounded-md shadow-none border overflow-hidden">
